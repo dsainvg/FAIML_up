@@ -12,6 +12,7 @@ For each PDF in Slides/sec1 (recursively):
   - Copy all non-PDF files to the processed folder, preserving structure.
 """
 
+import argparse
 import os
 import sys
 import shutil
@@ -21,8 +22,6 @@ import fitz  # PyMuPDF
 
 
 # ── Configuration ────────────────────────────────────────────────────────────
-SRC_DIR = Path(r"R:\FAIML\Slides\sec1")
-DST_DIR = Path(r"R:\FAIML\Slides\sec1 Processed")
 TOP_FRAC = 0.10   # first 10 % of the page height
 # BOT_FRAC = 0.05   # last  5 % of the page height
 DPI = 150          # render resolution (higher = more accurate but slower)
@@ -107,6 +106,16 @@ def process_pdf(src_path: Path, dst_path: Path) -> int:
 
 
 def main() -> None:
+    parser = argparse.ArgumentParser(
+        description="Remove build-step duplicate pages from PDFs."
+    )
+    parser.add_argument("src", help="Source directory containing PDFs")
+    parser.add_argument("dst", help="Destination directory for processed output")
+    args = parser.parse_args()
+
+    SRC_DIR = Path(args.src).resolve()
+    DST_DIR = Path(args.dst).resolve()
+
     if not SRC_DIR.exists():
         print(f"Source directory not found: {SRC_DIR}")
         sys.exit(1)
