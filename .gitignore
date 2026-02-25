@@ -1,2 +1,7 @@
-Slides/
-.venv/
+# Ignore everything
+*
+
+# Unignore the two specific files (replace with your actual filenames)
+!slides.ps1
+!cod/
+!gitignore
